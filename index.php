@@ -45,6 +45,9 @@ if(!isset($config)) $config = array();
 // The container creates Scaffold objects
 $container = new Scaffold_Container($system,$config);
 
+// Override cache with WordPress DB cache
+$container->_cache = new Scaffold_Cache_WPDB( 'scaffold835_', $config['max_age'] );
+
 // This is where the magic happens
 $scaffold = $container->build();
 
