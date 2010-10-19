@@ -27,7 +27,7 @@ $config['production'] = true;
  * This value, in seconds, determines how long the cache will last before it
  * tries to recompile the CSS again from the source. This won't affect the
  * the browser cache unless the file has actually changed.
- * 
+ *
  * If an extension needs to have the cache remade after a certain amount of
  * time, you'll probably want to set this.
  */
@@ -58,14 +58,14 @@ $config['output_compression'] = false;
  * ETags are good for ensuring content is only re-downloaded when
  * it needs to be, but when a file is delivered from many servers,
  * like in a cluster server setup, it can actually cause files
- * to be downloaded more than usual. 
+ * to be downloaded more than usual.
  *
  * @see http://developer.yahoo.com/performance/rules.html#etags
  * @see http://www.askapache.com/htaccess/apache-speed-etags.html
  */
 $config['set_etag'] = true;
 
-/** 
+/**
  * Enables the use of strings in the URL as a source
  */
 $config['enable_string'] = false;
@@ -79,11 +79,12 @@ $config['enable_url'] = false;
 // = Extension Configuration =
 // =========================================
 
-/** 
+/**
  * Enabled extensions
  */
 $config['extensions'] = array(
 	'AbsoluteUrls',
+	'CSS3',
 	'Embed',
 	'Functions',
 	'HSL',
@@ -113,3 +114,4 @@ $config['extensions'] = array(
 // =========================================
 
 include $system.'/index.php';
+
