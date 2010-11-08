@@ -39,7 +39,7 @@ class Scaffold_Extension_Variables extends Scaffold_Extension
 	 * @param Scaffold
 	 * @return void
 	 */
-	public function process($source,$scaffold)
+	public function pre_process($source,$scaffold)
 	{
 		// Get variables from the config
 		$this->variables = array_merge($this->config['variables'],$this->variables);
