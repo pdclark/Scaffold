@@ -26,13 +26,13 @@ class Scaffold_Extension_PDStyles extends Scaffold_Extension
 	public function variables_start($source,$scaffold)
 	{
 		global $PDStylesFrontendController;
-		
-		$pdstyles = get_option('pd-styles');
+
 		$css_permalink = $PDStylesFrontendController->get_css_permalink( $source->path );
-		
-		if ( !empty( $pdstyles['css_values'][$css_permalink] ) ) {
-			$this->variables = $pdstyles['css_values'][$css_permalink];
-		}
+		$this->variables = $PDStylesFrontendController->options['variables']->get();
+
+		//	if ( !empty( $pdstyles['css_values'][$css_permalink] ) ) {
+		//		$this->variables = $pdstyles['css_values'][$css_permalink];
+		//	}
 		
 		return true;
 	}
