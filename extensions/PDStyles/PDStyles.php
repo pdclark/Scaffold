@@ -28,8 +28,11 @@ class Scaffold_Extension_PDStyles extends Scaffold_Extension
 		global $PDStylesFrontendController;
 
 		$css_permalink = $PDStylesFrontendController->get_css_permalink( $source->path );
-		$this->variables = $PDStylesFrontendController->options['variables']->get();
-
+		
+		if( is_object( $PDStylesFrontendController->options['variables'][ $css_permalink ] ) ) {
+			$this->variables = $PDStylesFrontendController->options['variables'][ $css_permalink ]->get('css');
+		}
+		
 		//	if ( !empty( $pdstyles['css_values'][$css_permalink] ) ) {
 		//		$this->variables = $pdstyles['css_values'][$css_permalink];
 		//	}
