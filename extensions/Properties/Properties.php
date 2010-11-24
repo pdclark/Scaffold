@@ -57,7 +57,7 @@ class Scaffold_Extension_Properties extends Scaffold_Extension
 			foreach($scaffold->helper->css->find_properties($name,$source->contents) as $found)
 			{
 				// Call the hook method for this function
-				$result = call_user_func_array(array($obj,$method),array($found['value']));
+				$result = call_user_func_array(array($obj,$method),array($found['value'], $scaffold));
 				
 				// Replace it in the CSS
 				$source->contents = str_replace($found['property'],$result,$source->contents);
