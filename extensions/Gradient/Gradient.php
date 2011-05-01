@@ -106,15 +106,15 @@ class Scaffold_Extension_Gradient extends Scaffold_Extension
 			$repeat = 'x';
 		}
 
-		if(!$scaffold->cache->exists('gradients/'.$file)) 
+		if(!$scaffold->cache->exists('gradients'.DIRECTORY_SEPARATOR.$file)) 
 		{
 			$scaffold->cache->create('gradients');
-			$file = $scaffold->cache->find('gradients') . '/' . $file;
+			$file = $scaffold->cache->find('gradients') . DIRECTORY_SEPARATOR . $file;
 			$gradient = new GradientGD($width,$height,$direction,$from,$to,$stops);
 			$gradient->save($file);
 		}
 		
-		$file = $scaffold->cache->find('gradients') . '/' . $file;
+		$file = $scaffold->cache->find('gradients') . DIRECTORY_SEPARATOR . $file;
 		
 		$this->gradients[] = array
 		(
@@ -125,13 +125,34 @@ class Scaffold_Extension_Gradient extends Scaffold_Extension
 			$file
 		);
 		
+		$url = $this->get_url($file);
+		
 		$properties = "
 			background-position: top left;
 		    background-repeat: repeat-$repeat;
-		    background-image: url(".str_replace( $_SERVER['DOCUMENT_ROOT'], '', $file ).");
+		    background-image: url(".$url.");
 		";
 		
 		return $properties;
 
+	}
+	
+	public function get_url( $path ) {
+		$find = array(
+			$_SERVER['DOCUMENT_ROOT'],
+			str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $_SERVER['DOCUMENT_ROOT']), // IIS is a little confused
+			DIRECTORY_SEPARATOR,
+			'//',
+		);
+		$replace = array(
+			'',
+			'',
+			'/',
+			'/',
+		);
+		
+		$url = str_replace( $find, $replace, $path );
+		
+		return $url;
 	}
 }

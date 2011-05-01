@@ -27,7 +27,7 @@ class Scaffold_Extension_PDStyles extends Scaffold_Extension
 	{
 		global $PDStylesFrontendController;
 		
-		$css_permalink = $PDStylesFrontendController->get_css_permalink( $source->path );
+		$css_permalink = $PDStylesFrontendController->permalink;
 		
 		if ( $this->config['preview'] ) {
 			
