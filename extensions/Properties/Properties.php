@@ -45,7 +45,7 @@ class Scaffold_Extension_Properties extends Scaffold_Extension
 	 * @param $source
 	 * @return string
 	 */
-	public function process($source,$scaffold)
+	public function post_process($source,$scaffold)
 	{
 		// Go through each custom function
 		foreach($this->properties as $name => $property)
@@ -57,7 +57,7 @@ class Scaffold_Extension_Properties extends Scaffold_Extension
 			foreach($scaffold->helper->css->find_properties($name,$source->contents) as $found)
 			{
 				// Call the hook method for this function
-				$result = call_user_func_array(array($obj,$method),array($found['value'], $scaffold));
+				$result = call_user_func_array(array($obj,$method),array($found['value'], $scaffold, $found ));
 				
 				// Replace it in the CSS
 				$source->contents = str_replace($found['property'],$result,$source->contents);

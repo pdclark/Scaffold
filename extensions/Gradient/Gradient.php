@@ -124,13 +124,13 @@ class Scaffold_Extension_Gradient extends Scaffold_Extension
 			$to,
 			$file
 		);
-		
-		$url = $this->get_url($file);
-		
+
+		$file = substr( $file, strpos($file, '/wp-content') );
+
 		$properties = "
 			background-position: top left;
 		    background-repeat: repeat-$repeat;
-		    background-image: url(".$url.");
+		    background-image: url('$file');
 		";
 		
 		return $properties;
