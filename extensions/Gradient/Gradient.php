@@ -124,11 +124,14 @@ class Scaffold_Extension_Gradient extends Scaffold_Extension
 			$to,
 			$file
 		);
+
 		
+		$file = substr( $file, strpos($file, '/wp-content') );
+
 		$properties = "
 			background-position: top left;
 		    background-repeat: repeat-$repeat;
-		    background-image: url(".str_replace( $_SERVER['DOCUMENT_ROOT'], '', $file ).");
+		    background-image: url('$file');
 		";
 		
 		return $properties;

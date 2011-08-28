@@ -109,13 +109,13 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 			$hex_color = $this->rgb2html($r,$g,$b);
 
 			$hex_a = dechex(255*floatval($a));
-			$hex_a = (strlen($hex_a) < 2?'0':'').$hex_a
+			$hex_a = (strlen($hex_a) < 2?'0':'').$hex_a;
 			$ms_color = '#' . $hex_a . substr($hex_color,1);
 
 			$css = "background-color: $hex_color;"
 				. "background-color: rgba($r, $g, $b, $a);"
 				. "filter: progid:DXImageTransform.Microsoft.gradient("
-					. "startColorStr='$ms_color',EndColorStr='$ms_color');"
+					. "startColorStr='$ms_color',EndColorStr='$ms_color');";
 		} else $css = "background-color: $value;";
 		return $css;
 	}
@@ -131,7 +131,7 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 	 * @param $url
 	 * @return string
 	 */
-	public function border_radius($value) {
+	public function border_radius($value, $scaffold, $found) {
 		$css = "-moz-border-radius:{$value};"
 			. "-webkit-border-radius:{$value};"
 			. "-khtml-border-radius:{$value};"
@@ -152,7 +152,7 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 	 * @return string
 	 */
 	public function box_shadow($value) {
-		$regexp = '/(\d+)px\s+(\d+)px\s+(\d+)px\s+(#[\da-fA-F]+)/'
+		$regexp = '/(\d+)px\s+(\d+)px\s+(\d+)px\s+(#[\da-fA-F]+)/';
 		if(preg_match($regexp,$value,$match)) {
 			list(,$x,$y,$blur,$color) = $match;
 			list($rotation, $strength) = $this->xy2rs($x,$y);
@@ -201,7 +201,7 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 	 * @return string
 	 */
 	public function text_shadow($value) {
-		$css = "text-shadow: $value;"
+		$css = "text-shadow: $value;";
 		$css .= "behavior:url('{$this->behaviorpath}ie-css3.htc');";
 		return $css;
 	}
