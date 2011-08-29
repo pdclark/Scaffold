@@ -76,6 +76,7 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 		global $system;
 		$this->behaviorpath = $system . 'extensions/CSS3/behaviors/';
 		$properties->register('background-color',array($this,'background_color'));
+		$properties->register('-wp-background-color',array($this,'wp_background_color'));
 		$properties->register('border-radius',array($this,'border_radius'));
 		$properties->register('box-shadow',array($this,'box_shadow'));
 		$properties->register('opacity',array($this,'opacity'));
@@ -91,7 +92,26 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 	public function initialize($source,$scaffold) {
 		$this->source = $source;
 	}
-
+	
+	public function extract_value($value) {
+		$parts = explode('//', $value);
+		foreach($parts as &$part) {
+			$part = trim($part);
+		}
+		return array(
+			'value' => $parts[0],
+			'comment' => $parts[1],
+		);
+	}
+	
+	public function wp_background_color($value, $scaffold, $meta) {
+		extract( $this->extract_value($value) );
+		FB::log($value, '$value');
+		FB::log($comment, '$comment');
+		FB::log($scaffold, '$scaffold');
+		FB::log($meta, '$meta');
+	}
+	
 	/**
 	 * Enables rgba backgrounds in IE
 	 *
@@ -131,7 +151,7 @@ class Scaffold_Extension_CSS3 extends Scaffold_Extension
 	 * @param $url
 	 * @return string
 	 */
-	public function border_radius($value, $scaffold, $found) {
+	public function border_radius($value, $scaffold, $meta) {
 		$css = "-moz-border-radius:{$value};"
 			. "-webkit-border-radius:{$value};"
 			. "-khtml-border-radius:{$value};"

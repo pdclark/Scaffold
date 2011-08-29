@@ -56,9 +56,6 @@ class Scaffold_Extension_Variables extends Scaffold_Extension
 	}
 	
 	/**
-	 * Returns the 
-	
-	/**
 	 * Finds variable groups in a CSS string
 	 * @access public
 	 * @param $str
