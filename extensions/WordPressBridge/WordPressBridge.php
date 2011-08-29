@@ -1,6 +1,6 @@
 <?php
 /**
- * Scaffold_Extension_PDStyles
+ * Scaffold_Extension_WordPressBridge
  *
  * Preloads variables to use within the CSS from the WordPress PD Styles plugin.
  * 
@@ -10,7 +10,7 @@
  * @license 		http://opensource.org/licenses/bsd-license.php  New BSD License
  * @link 			https://github.com/anthonyshort/csscaffold/master
  */
-class Scaffold_Extension_PDStyles extends Scaffold_Extension
+class Scaffold_Extension_WordPressBridge extends Scaffold_Extension
 {	
 	/**
 	 *  Raw values for use in property functions. Meant to replace $variables.
@@ -33,11 +33,11 @@ class Scaffold_Extension_PDStyles extends Scaffold_Extension
 			
 			$preview = get_option('pd-styles-preview');
 			if( is_object( $preview[ $css_permalink ] ) ) {
-				$this->vals = $preview[ $css_permalink ]->get();
+				$this->vals = $preview[ $css_permalink ]->get('css');
 			}
 
 		}else if( is_object( $PDStylesFrontendController->options['variables'][ $css_permalink ] ) ) {
-			$this->vals = $PDStylesFrontendController->options['variables'][ $css_permalink ]->get();
+			$this->vals = $PDStylesFrontendController->options['variables'][ $css_permalink ]->get('css');
 		}
 	}
 	
@@ -102,12 +102,14 @@ class Scaffold_Extension_PDStyles extends Scaffold_Extension
 			'label' => $label,
 			'id'    => $id,
 			'key'   => $key,
-			'method' => __FUNCTION__,
+			'class' => 'PDStyles_Extension_Color',
 		);
-	
+		// FB::log($this->vals, '$this->vals');
+		if (!empty( $this->vals[$group][$key] )) {
+			$value = $this->vals[$group][$key];
+		}
 		
-		
-		return '/* Howdy ;) */';
+		return "background-color: $value;";
 	}
 	
 	/**
