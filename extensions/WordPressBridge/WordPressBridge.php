@@ -52,6 +52,7 @@ class Scaffold_Extension_WordPressBridge extends Scaffold_Extension
 		$this->behaviorpath = $system . 'extensions/CSS3/behaviors/';
 		$properties->register('background-color',array($this,'background_color'));
 		$properties->register('-wp-background-color',array($this,'wp_background_color'));
+		$properties->register('-wp-font',array($this,'wp_font'));
 		// $properties->register('border-radius',array($this,'border_radius'));
 		// $properties->register('box-shadow',array($this,'box_shadow'));
 		// $properties->register('opacity',array($this,'opacity'));
@@ -96,6 +97,7 @@ class Scaffold_Extension_WordPressBridge extends Scaffold_Extension
 		$id = $this->create_id($meta);
 		$key = md5($id);
 		
+		// Populate found array for WP UI generation
 		$this->found[$group][$key] = array(
 			'value' => $value,
 			'group' => $group,
@@ -104,12 +106,50 @@ class Scaffold_Extension_WordPressBridge extends Scaffold_Extension
 			'key'   => $key,
 			'class' => 'PDStyles_Extension_Color',
 		);
-		// FB::log($this->vals, '$this->vals');
-		if (!empty( $this->vals[$group][$key] )) {
-			$value = $this->vals[$group][$key];
-		}
 		
+		// Extract values saved from WP form
+		@extract( $this->vals[$group][$key] );
+
+		if ( !empty($color) ) { $value = $color; }
+
 		return $this->background_color($value);
+	}
+	
+	public function wp_font($value, $scaffold, $meta) {
+		extract( $this->extract($value) );
+		
+		$id = $this->create_id($meta);
+		$key = md5($id);
+		
+		// Populate found array for WP UI generation
+		$this->found[$group][$key] = array(
+			'value' => $value,
+			'group' => $group,
+			'label' => $label,
+			'id'    => $id,
+			'key'   => $key,
+			'class' => 'PDStyles_Extension_Font',
+		);
+		
+		// Extract values saved from WP form
+		@extract( $this->vals[$group][$key] );
+		
+		$opts = new PDStyles_Extension_Font();
+		$font_family = $opts->families[$font_family];
+
+		if ( !empty($font_size) && !empty($font_family) ) {
+			
+			if (!empty($line_height)) { $line_height = '/'.$line_height;}
+			
+			$output = "font: $font_style $font_weight {$font_size}px{$line_height} $font_family;";
+			if (!empty($text_transform))	$output .= "text-transform:{$text_transform};";
+			
+			return $output;
+		}else {
+			return "font: $value";
+		}
+
+		
 	}
 	
 	/**
