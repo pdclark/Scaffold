@@ -25,7 +25,8 @@ class Scaffold_Extension_AbsoluteUrls extends Scaffold_Extension
 		if($source->path === false) return;
 		
 		# The path to the source file relative to the document root
-		$relative_path = str_replace($_SERVER['DOCUMENT_ROOT'],'',dirname($source->path) . DIRECTORY_SEPARATOR);
+		$path = dirname($source->path) . DIRECTORY_SEPARATOR;
+		$relative_path = substr($path, strlen( $_SERVER['DOCUMENT_ROOT'] ) + strpos( $path, $_SERVER['DOCUMENT_ROOT'] ) );
 	
 		# Process all @imports
 		if($found = $this->find_imports($source->contents))
