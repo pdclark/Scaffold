@@ -1,1 +1,1 @@
-<?php include dirname( dirname( dirname( dirname( __FILE__ )))).'/lib/WordPressBridge.php';
+<?php include dirname( dirname( dirname( dirname( __FILE__ )))).'/classes/WordPressBridge.php';
